@@ -176,7 +176,7 @@
             J'ai comparé plusieurs méthodes qui utilisaient une partie ou l'intégration des neufs degrés de liberté de la centrale inertielle :
             \begin{itemize}
                 \item Une première méthode sans calibration : les résultats sont aberrants et non exploitables.
-                \item Une méthode sans intégration mais avec un programme pour une calibration extérieure. C'est celle qui a donné de meilleures résultats 
+                \item Une méthode sans intégration mais avec un programme pour une calibration. C'est celle qui a donné de meilleures résultats 
                         qui sont plutôt exploitables pour une très faible précision.
                 \item Une méthode avec intégration (par exemple Madgwick) : il m'a manqué du temps pour régler tous les paramètres avec d'obtenir des résultats satisfaisants.
                 \item Une méthode sans intégration avec fusion du gyroscope, accéléromètre et magnétomètre : il m'a manqué également du temps.
@@ -199,7 +199,7 @@
              \begin{itemize}
                 \item La triangulation est encore trop imprécise, il faudrait estimer l'incertitude miminum théorique atteignable 
                         pour savoir si nous pouvons encore continuer de s'appuyer sur cette méthode.
-                \item Le magnétomètre est fortement perturbé en intérieur malgré une calibration extérieure.
+                \item Le magnétomètre est fortement perturbé en intérieur malgré une calibration.
                         Il faudrait mieux gérer les appareils électromagnétiques en intérieur.
                 \item Le calibrage est encore trop long et fastidieux pour un utilisateur néophyte (mesure de distance, placement précis...) :
                         davantage d'automatisation serait nécessaire.
