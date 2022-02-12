@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass[10pt]{article}
 
 \input{includes}
 
@@ -14,11 +14,9 @@
 
     \section{Introduction}
 
-        Ce projet est issu d'une excellente idée de Thibaut.
-
         \subsection{Cahier des charges}
 
-        Le concept du projet à formaliser a été de proposer un gant "connecté", 
+        Le concept du projet à formaliser, imaginé par Thibaut, est de proposer un gant "connecté", 
             c'est-à-dire pouvant contrôler par des gestes les objets connectés du quotidien,
             qui occupent une place croissante dans nos foyers. L'existence d'API majeures comme celles
             de Google Home ou Amazon Alexa laissent supposer une possibilité de contrôle standardisée
@@ -35,73 +33,78 @@
             \begin{itemize}
                 \item Les objets à contrôler sont des lampes (on/off) et une enceinte (play/pause) grâce à une API classique.
                 \item La zone à couvrir est une pièce de taille moyenne.
-                \item Les gestes à détecter sont une main qui pointe ou un doigt en contact avec le pouce.
+                \item Les gestes/postures à détecter sont une main qui pointe ou un doigt en contact avec le pouce.
                 \item Il faut être capable de connaitre la localisation et l'orientation du gant pour pouvoir
-                        récupérer la position de ce qui est pointé
+                        récupérer la direction pointée
                         avant de faire un geste qui exécute un ordre.
-                \item Il est possible d'utiliser un intermédiaire entre le gant et les objets pour communiquer avec l'API.
             \end{itemize}
 
         J'ai eu deux rôles au cours du projet, en plus de participer activement à la motivation et à l'organisation grâce à des 
-            échanges fréquents sur une conversation Messenger :
+            échanges fréquents directs et par messages :
             \begin{itemize}
-                \item Tout d'abord, nous avons développé des modules séparément après la définition du cahier des charges et des choix techniques.
+                \item Tout d'abord, mes camarades et moi avons développé des modules séparément après la définition du cahier des charges et des choix techniques.
                         Sur certaines parties difficiles, nous avons choisi de travailler en binôme pour s'aider mutuellement.
                         \begin{itemize}
                             \item Alondra et Pierre ont travaillé sur le capteur de pression et le contact entre les doigts.
                             \item Thibaut a étudié la triangulation pour la localisation du gant et a réalisé de nombreuses soudures
                                     en aidant Alondra et Pierre.
                             \item Jean-Edouard a beaucoup aidé Thibaut et a travaillé sur le bluetooth classique.
-                            \item J'ai travaillé sur différents modules.
+                            \item J'ai travaillé sur différents modules, notamment le magnéomètre et l'utilisation des API pour le contrôle des objets.
                         \end{itemize} 
-                \item Je me suis ensuite chargé de réaliser le code pour la fusion de modules développés par les autres membres de l'équipe.
-                        Thibaut et Jean-Edouard m'ont aidé pour cette tâche qui demande de bien se mettre d'accord sur les conventions.
-                        Pendant ce temps, Alondra et Pierre ont travaillé sur la fin de la formalisation du cahier des charges
+                \item Je me suis ensuite chargé de réaliser le code pour la fusion des éléments développés par les autres membres de l'équipe.
+                        Thibaut et Jean-Edouard m'ont aidé pour cette tâche qui demande de bien se mettre d'accord sur les conventions et de nombreux ajustements.
+                        Pendant ce temps, Alondra et Pierre ont réalisé quelques dernières modifications sur le gant 
+                        puis ont travaillé sur la fin de la formalisation du cahier des charges
                             et la préparation des slides.
             \end{itemize}
                
-        \subsection{Montages électroniques et morceaux de code}
+        \subsection{Montages électroniques et modules de code}
 
-            Les principaux montages électroniques que j'ai réalisé pour tester les différents modules sont :
+            Les principaux montages électroniques que j'ai réalisés pour tester les différents modules sont :
 
             \begin{itemize}
                 \item Une Arduino Uno avec un composant Steval MKI109v3 via I2C.
-                    Ce capteur contient la même centrale inertielle que l'Arduino Nano BLE que nous allons utiliser.
+                    Ce capteur contient la même centrale inertielle que l'Arduino Nano BLE que nous utilisons sur le gant.
                 \item Une Arduino Uno avec un composant Bluetooth HC05.
                 \item Une Raspberry-Pi configurée pour pouvoir utiliser SSH et VNC.
             \end{itemize}
 
-            D'autres montages ont été réalisé par les autres membres de l'équipe :
+            D'autres montages ont été réalisés par les autres membres de l'équipe, notamment :
             \begin{itemize}
                 \item Arduino Nano avec capteur de pression (et résistances).
                 \item Arduino Nano avec capteur de contact (fils à mettre en contact).
                 \item La réalisation d'un support 3D pour les manettes de Wii à placer sur un trépied pour appareil photo.
             \end{itemize}
 
-            Certains montages ont été tentés mais n'ont pas fonctionné :
+            Thibaut a tenté certains montages avec moi mais ils n'ont pas fonctionné :
             % enlever filtre IR Raspberry pi
             \begin{itemize}
-                \item Arduino Uno avec la caméra infrarouge (IR) d'une manette de Wii non officielle via I2C et SPI.
+                \item Arduino Uno avec la caméra infrarouge (IR) d'une manette de Wii non officielle via I2C ou SPI.
                 \item Raspberry Pi avec un module caméra sans filtre IR (le filtre n'a pas pu être enlevé).
             \end{itemize}
 
-            En ce qui concerne le code, j'ai créé les dépôts GitHub et je les ai organisés. J'ai codé les modules suivants :
+            En ce qui concerne le code, j'ai créé les dépôts GitHub et je les ai organisés. Ils sont disponibles aux adresses suivantes :
+            \begin{itemize}
+                \item \url{https://github.com/florian6973/iglove-arduino}
+                \item \url{https://github.com/florian6973/iglove-pi}
+            \end{itemize} 
+            
+            J'ai codé les modules suivants :
             \begin{itemize}
                 \item Communication BLE de l'Arduino Nano BLE (en tant que serveur).
                 \item Communication BLE de la Raspberry Pi (en tant que client).
                 \item Détermination de l'orientation du gant avec l'Arduino Uno (avec le module Steval) puis avec l'Arduino Nano BLE.
                 \item Communication avec Home Assistant sur la Raspberry Pi (via Wifi).
-                \item Communication avec MQTT entre différentes Raspberry Pi (via Wifi).
+                \item Communication avec MQTT entre différentes Raspberry Pi et Home Assistant (via Wifi).
                 \item J'ai recodé une partie du module de triangulation avec les formules fournies par Thibaut.
             \end{itemize}
 
-            J'ai également réalisé l'installation et la configuration du serveur Home Assistant sur la Raspberry Pi, ainsi 
+            J'ai également réalisé l'installation et la configuration du serveur Home Assistant sur la Raspberry Pi avec Docker, ainsi 
             que de MQTT.
 
     \section{Réalisation du projet}
 
             Pour réaliser ce gant connecté, nous avons disposé de 5 semaines.
-
             Ce délai a imposé de prendre des décisions très rapidement concernant les choix techniques
                 pour avoir le temps de commander les composants sur différentes plateformes.
             Nous avons fait face à certaines ruptures de stock qui nous ont conduit à commander sur 
@@ -109,44 +112,40 @@
             Une étape compliquée a été la récupération de manettes de Wii officielles après l'échec
                 de celles achetées (non officielles).
 
-            L'organisation choisie a été de parallèliser aux maximum les opérations, en commençant par les tests élémentaires
+            L'organisation choisie a été de paralléliser aux maximum les opérations, en commençant par les tests élémentaires
                 afin de valider ou infirmer les choix techniques et corriger le plus rapidement la trajectoire du projet,
                 en rassemblant au fur et à mesure ce qui fonctionne.
 
         \subsection{Sélection et obtention des composants}
         
-            Nous avons choisi d'utiliser un système une Arduino et une Raspberry
+            Nous avons choisi d'utiliser un système reposant sur une Arduino et une Raspberry
                 au lieu d'un seul microcontroleur ou Raspberry afin d'améliorer la portabilité du gant
-                (alimentation, poids, puissance de calcul a posteriori).           
-            
-            % réellement le cas ?
-
-            Afin de simplifier les circuits, j'ai participé au choix de l'Arduino Nano BLE
+                (alimentation, poids, puissance de calcul a posteriori). Afin de simplifier les circuits, j'ai participé au choix de l'Arduino Nano BLE
                 qui dispose d'une centrale inertielle et d'un module Bluetooth BLE intégré.
+                Les capteurs de pression et de contact ont été sélectionnés selon des critères économiques
+                et de taille.
 
-            Les capteurs de pression et de contact ont été sélectionnés.
-
-            Le plus difficile a été le choix de la méthode de triangulation et donc des composants associés.
+            Le plus difficile a été le choix de la méthode de triangulation et donc des composants associés nécessaires.
+                Thibaut a effectué de nombreuses recherches à ce sujet.
                 Des capteurs Bluetooth prometteurs ont été identifiés mais leur coût (2000 €) a été prohibitif.
                 Un système de traitement d'images avec des caméras a été évoqué, mais les données à transférer
-                et les algorithmes à utiliser sont complexes.
+                et les algorithmes à utiliser sont complexes et posent des questions de vie privée.
                 Finalement, nous avons choisi d'utiliser les caméras IR des manettes de Wii avec des LED IR 940 nm
             pour trianguler. Les manettes non officielles n'ont cependant pas fonctionné, ce qui nous a fait
-            perdre beaucoup de temps entre les essais et la recherche de manettes officielles, malgré de nombreux essais
-                de démonter la manette et de récupérer les composants.        
+            perdre beaucoup de temps entre les essais et la recherche de manettes officielles.
 
         \subsection{Installation des biliothèques logicielles}
 
-            Pour connecter en Bluetooth (classique) et communiquer avec les manettes Wii (qui donnent directement le point infrarouge sur les coordonnées d'un écran),
-                la librairie cwiid a été utilisée. Il a fallu recompiler le wrapper car la version disponible ne fonctionnait pas, la librairie commençant à vieillir
+            Pour connecter en Bluetooth (classique) et communiquer avec les manettes Wii (qui donnent directement le point infrarouge comme des coordonnées d'un écran),
+                la librairie \emph{cwiid} a été utilisée. Il a fallu recompiler le wrapper car la version disponible ne fonctionnait pas, la librairie commençant à vieillir
                 étant donné l'âge des manettes Wii.           
 
-            Les bibliothèques bluetooth, bleak (pour le BLE), homeassistant (pour la communication avec l'API), MQTT ont dues être installées et être prises en main pour l'intégrer 
-                au projet. Le plus gros obstacle était le manque de documentation pour certaines parties.
+            Les bibliothèques \emph{bluetooth, bleak} (pour le BLE), `\emph{homeassistant} (pour la communication avec l'API), \emph{paho-mqtt} ont dues être installées et être prises en main pour l'intégrer 
+                au projet. Le plus gros obstacle était le manque de documentation pour certaines librairies.
 
             L'Arduino a aussi nécessité des bibliothèques pour les capteurs et la BLE.
                 Le manque d'information sur les composants a rendu cette tâche parfois difficile et nous ne sommes pas 
-                parvenu à trouver des informations sur le capteur des manettes non officielles.
+                parvenu à trouver des informations sur le capteur des manettes non officielles par exemple.
             Nous avons envisagé d'utiliser OpenMV pour programmer l'Arduino en Python mais cela s'est révélé trop compliqué
                 et nous avons préféré suivre une voie plus traditionnelle.
             
@@ -154,17 +153,17 @@
         \subsection{Création d'objets connectés}
 
             Afin de tester notre projet, nous avons dans un premier temps créé des objets connectés de type LED/Lampe
-                avec une Raspberry Pi (car le Bluetooth et Python sont intégrés), toutefois nous avons dans un second temps
+                avec une Raspberry Pi (car le Bluetooth et Python y sont intégrés), toutefois nous avons dans un second temps
                 reproduit le même objet avec uniquement une Arduino Uno et son module Bluetooth.
             
-            Finalement, nous avons utilisé de vraies ampoules et enceinte connectées pour nos tests, nous ne nous en sommes donc pas servis.
+            Finalement, nous avons utilisé de vraies ampoules et enceinte connectées pour nos tests, nous ne nous en sommes donc pas servis pour la démonstration.
 
         \subsection{Communication entre les objets}
 
             Pour utiliser les lampes connectées, qui sont nativement gérées par l'application Smart Life, il a fallu se créer un compte développeur
-                et générer un token à insérer dans Home Assistant. Il peut ainsi communiquer avec Smart Life et agir sur tous les objets qui y sont reliés.
+                et générer un token à insérer dans Home Assistant. Il peut ainsi ensuite communiquer avec Tuya / Smart Life et agir sur tous les objets qui y sont reliés.
 
-            La solution avec MQTT pour les objets connectés fabriquées n'a pas été conservée mais très intéressante à implémenter.
+            La solution avec MQTT pour les objets connectés fabriqués n'a pas été conservée mais a été très intéressante à implémenter.
 
             Pour l'enceinte Bluetooth, Jean-Edouard s'est chargé de développer le code qui communique avec elle.
 
@@ -175,9 +174,9 @@
             J'ai comparé plusieurs méthodes qui utilisaient une partie ou l'intégration des neufs degrés de liberté de la centrale inertielle :
             \begin{itemize}
                 \item Une première méthode sans calibration : les résultats sont aberrants et non exploitables.
-                \item Une méthode sans intégration mais avec un programme pour une calibration extérieure. C'est celle qui a donné de meilleures résultats 
-                        qui sont plutôt exploitables pour une très faible précision.
-                \item Une méthode avec intégration (par exemple Madgwick) : il m'a manqué du temps pour régler tous les paramètres avec d'obtenir des résultats satisfaisants.
+                \item Une méthode sans intégration mais avec un programme pour une calibration. C'est celle qui a donné de meilleures résultats 
+                        qui sont plutôt exploitables pour une précision moyenne.
+                \item Une méthode avec intégration et fusion (par exemple Madgwick) : il m'a manqué du temps pour régler tous les paramètres qui permettent d'obtenir des résultats satisfaisants.
             \end{itemize}
             
             Le passage de l'Arduino Uno avec Sterval à la Nano a demandé une adaptation imprévue et conséquente du code car la bibliothèque n'était pas exactement similaire
@@ -186,32 +185,26 @@
             
         \subsection{Réalisation du gant}
             Cette partie a été réalisée en parallèle par d'autres membres de l'équipe. 
-            Je n'ai que été chargé de mettre le code ensemble et de le téléverser sur l'Arduino Nano, cela a cependant demandé
+            Je n'ai été chargé que de mettre le code ensemble et de le téléverser sur l'Arduino Nano, cela a cependant demandé
                 de nombreux ajustements afin que tout fonctionne, en plus du recodage d'une partie de l'algorithme de triangulation.
-            J'ai ainsi peu souder, à part pour aider Thibaut à quelques occasions.
+            J'ai ainsi peu soudé, à part pour aider Thibaut à quelques occasions.
 
     \section{Conclusion}
 
-            Le MVP iGlove a ainsi pu être atteint comme l'a montré la démonstration et cela pourrait servir de Proof of Concept (POC) pour un nouveau produit
-             toutefois il reste de nombreux ajustements à réaliser sur les aspects étudiés pour élargir le champ des possibles et les fonctionnalités du gant :
+            Le MVP iGlove a ainsi pu être réalisé en tant que Proof of Concept (POC) pour un nouveau produit,
+             toutefois il reste de nombreux ajustements à réaliser sur les aspects étudiés pour 
+             proposer un produit utilisable par un utilisateur quelconque,
+             élargir le champ des possibles et les fonctionnalités du gant :
              \begin{itemize}
                 \item La triangulation est encore trop imprécise, il faudrait estimer l'incertitude miminum théorique atteignable 
                         pour savoir si nous pouvons encore continuer de s'appuyer sur cette méthode.
-                \item Le magnétomètre est fortement perturbé en intérieur malgré une calibration extérieure.
+                \item Le magnétomètre est fortement perturbé en intérieur malgré une calibration.
                         Il faudrait mieux gérer les appareils électromagnétiques en intérieur.
                 \item Le calibrage est encore trop long et fastidieux pour un utilisateur néophyte (mesure de distance, placement précis...) :
-                        davantage d'automatisation serait nécessaire.
-                \item Dans le même domaine, l'uniformisation des protocoles dans les objets connectés est encore imparfaite.
+                        davantage d'automatisation et d'ergonomie serait nécessaire.
+                \item Dans le même domaine, l'uniformisation des protocoles dans les objets connectés est encore imparfaite. Cependant,
+                        il est probablement complexe d'aborder un tel problème...
              \end{itemize}
 
              % quoi en plus ?
-
-    \appendix
-
-    \section {Code source}
-        Les codes de l'Arduino et de la Raspberry Pi sont disponibles aux adresses suivantes :
-        \begin{itemize}
-            \item \url{https://github.com/florian6973/iglove-arduino}
-            \item \url{https://github.com/florian6973/iglove-pi}
-        \end{itemize}
 \end{document}
